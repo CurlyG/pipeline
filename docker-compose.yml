@@ -1,0 +1,51 @@
+version: '3.7'
+services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins/docker
+    build: 
+      context: pipeline
+    ports:
+      - "8080:8080"
+    environment: 
+      SPRING_DATASOURCE_URL: jdbc:mysql://192.168.88.232:3306/recipenew
+      SPRING_DATASOURCE_USERNAME: appuser
+      SPRING_DATASOURCE_PASSWORD: Password0
+    volumes:
+      - "$PWD/jenkins_home:/var/jenkins_home"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - net
+  db:
+    image: mysql:8
+    hostname: db
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    environment:
+      MYSQL_DATABASE: recipenew
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: Password0
+      MYSQL_ROOT_PASSWORD: Password0
+    volumes:
+      - "$PWD/db_data:/var/lib/mysql"
+    networks:
+      - net
+  app:
+    image: irecipe
+    build:
+      context: pipeline/jenkins/build
+      dockerfile: Dockerfile-Java
+    restart: always
+    ports:
+      - 8081:8080
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/3306/recipenew
+    networks:
+      - net
+networks:
+  net:
+

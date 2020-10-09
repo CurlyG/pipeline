@@ -1,0 +1,377 @@
+{
+	"info": {
+		"_postman_id": "4b1f1a88-c561-4813-ba84-23158aec028b",
+		"name": "Recipes",
+		"description": "API for tracking recipes.\r\nAPI base URL is \"http://localhost:8080/api/v1/recipes\".",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get recipes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d9dfe605-44a2-4803-9374-8d78a773962f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"        let jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"recipeid\", jsonData[0].id); \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "69aca052-86a7-4c13-89f5-4256e1bdfe69",
+						"exec": [
+							"pm.environment.clear();"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/recipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post a recipe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "92ffd664-a6d5-4b3a-9eac-ac2ba7796c80",
+						"exec": [
+							"pm.test(\"Created user\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Lazagna\",\r\n        \"prepTimeInMin\": 9,\r\n        \"cookTimeInMin\": 6,\r\n        \"servings\": 3,\r\n        \"directions\": \"string\"\r\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/recipes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"recipes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get specific recipe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8374a74b-32a8-49d1-9e2f-e7a62a47f815",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var jsonData = JSON.parse(responseBody);\r",
+							"postman.setEnvironmentVariable(\"id\", jsonData.id); \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9488aeab-6984-41ac-96a4-f52d902626d8",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/recipes/{{recipeid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"recipes",
+						"{{recipeid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modify the recipe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "48333320-09f3-474c-bd6e-0b4c463dd278",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e3c19996-5ad0-4e83-b594-af145a5892d5",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Qyufta\",\r\n        \"prepTimeInMin\": 48,\r\n        \"cookTimeInMin\": 6,\r\n        \"servings\": 0,\r\n        \"directions\": \"string\",\r\n        \"difficulty\": \"EASY\",\r\n        \"comments\": [],\r\n        \"user\": null,\r\n        \"cuisine\": null\r\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/recipes/{{recipeid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"recipes",
+						"{{recipeid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check if the recipe modified",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "068b59b2-cdf4-45f4-a19a-0cdd854e8eaf",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"cake\",\r\n        \"prepTimeInMin\": \"true\",\r\n        \"cookTimeInMin\": 6,\r\n        \"servings\": 0,\r\n        \"directions\": \"string\",\r\n        \"difficulty\": \"EASY\",\r\n        \"comments\": [],\r\n        \"user\": null,\r\n        \"category\": null,\r\n        \"cuisine\": null\r\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/recipes/{{recipeid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"recipes",
+						"{{recipeid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete the recipe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3b2ba7df-7ad5-4375-b6fa-11be8a7fe64c",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/recipes/{{recipeid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"recipes",
+						"{{recipeid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check if the recipe deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d30ad9af-7bca-42ad-b2b2-66ce7645fd38",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"cake\",\r\n        \"prepTimeInMin\": \"true\",\r\n        \"cookTimeInMin\": 6,\r\n        \"servings\": 0,\r\n        \"directions\": \"string\",\r\n        \"difficulty\": \"EASY\",\r\n        \"comments\": [],\r\n        \"user\": null,\r\n        \"category\": null,\r\n        \"cuisine\": null\r\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/recipes/{{recipeid}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"recipes",
+						"{{recipeid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
